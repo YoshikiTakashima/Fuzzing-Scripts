@@ -877,7 +877,9 @@ fn fuzz_it(crate_name: &str, tests: &[String]) {
                 afl_output_dir.to_str().unwrap(),
                 afl_target_path.to_str().unwrap(),
             ];
-            let exit_status = Command::new("cargo")
+            let exit_status = Command::new("timeout")
+                .arg("24h")
+                .arg("cargo")
                 .args(&args)
                 .current_dir(test_path_copy.as_os_str())
                 .env("AFL_EXIT_WHEN_DONE", "1")
